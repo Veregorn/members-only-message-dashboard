@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/Veregorn/members-only-message-dashboard/issues"
   },
-  "homepage": "https://github.com/Veregorn/members-only-message-dashboard#readme"
+  "homepage": "https://github.com/Veregorn/members-only-message-dashboard#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
