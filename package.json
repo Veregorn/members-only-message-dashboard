@@ -1,0 +1,25 @@
+{
+  "name": "members-only-message-dashboard",
+  "version": "1.0.0",
+  "description": "An exclusive clubhouse where members can write posts.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Veregorn/members-only-message-dashboard.git"
+  },
+  "keywords": [
+    "javascript",
+    "mongodb",
+    "passport",
+    "express"
+  ],
+  "author": "veregorn",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Veregorn/members-only-message-dashboard/issues"
+  },
+  "homepage": "https://github.com/Veregorn/members-only-message-dashboard#readme"
+}
