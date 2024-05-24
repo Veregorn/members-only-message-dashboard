@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
+// Require controller modules.
+const messageController = require('../controllers/messageController');
+
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/', messageController.index);
 
 module.exports = router;
