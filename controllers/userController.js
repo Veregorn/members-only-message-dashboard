@@ -12,6 +12,8 @@ exports.user_create_get = asyncHandler(async function (req, res, next) {
     res.render('user_form', {
         title: 'Create User',
         user: null,
+        errors: null,
+        succeeded: false,
         layout: 'layout',
     });
 });
@@ -19,24 +21,37 @@ exports.user_create_get = asyncHandler(async function (req, res, next) {
 // Handle user create on POST.
 exports.user_create_post = asyncHandler([
     // Validate and sanitize fields
-    body('first_name', 'First name must not be empty.')
+    body('first_name')
         .trim()
         .isLength({ min: 1, max: 100 })
+        .withMessage('First name must not be empty and must not be greater than 100 characters.')
         .escape(),
-    body('last_name', 'Last name must not be empty.')
+    body('last_name')
         .trim()
         .isLength({ min: 1, max: 100 })
+        .withMessage('Last name must not be empty and must not be greater than 100 characters.')
         .escape(),
-    body('username', 'Username must not be empty.')
+    body('username')
         .trim()
         .isLength({ min: 1, max: 100 })
+        .withMessage('Username must not be empty and must not be greater than 100 characters.')
         .escape(),
-    body('password', 'Password must not be empty.')
+    body('password')
         .trim()
         .isLength({ min: 1, max: 30 })
+        .withMessage('Password must not be empty and must not be greater than 30 characters.')
         .escape(),
-    body('password2', 'Passwords do not match.')
-        .custom((value, { req }) => value === req.body.password),
+    body('password2')
+        .trim()
+        .isLength({ min: 1, max: 30 })
+        .withMessage('Password must not be empty and must not be greater than 30 characters.')
+        .custom((value, { req }) => {
+            if (value !== req.body.password) {
+                throw new Error('Passwords do not match');
+            }
+            return true;
+        })
+        .escape(),
     body('status')
         .escape(),
 
@@ -60,13 +75,20 @@ exports.user_create_post = asyncHandler([
                 title: 'Create User',
                 user: user,
                 errors: errors.array(),
+                succeeded: false,
                 layout: 'layout',
             });
             return;
         } else {
             // Data from form is valid. Save user.
-            // await user.save();
-            res.redirect(user.url);
+            await user.save();
+            res.render('user_form', {
+                title: 'Create User',
+                user: user,
+                errors: null,
+                succeeded: true,
+                layout: 'layout',
+            });
         }
     }),
 ]);

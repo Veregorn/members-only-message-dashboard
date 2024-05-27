@@ -186,3 +186,13 @@ input[type="radio"] {
   font-size: 0.8rem!important;
   margin-right: 3rem;
 }
+
+.errors {
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+
+.errors li {
+  list-style-type: none;
+}
