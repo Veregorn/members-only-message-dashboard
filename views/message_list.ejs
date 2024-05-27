@@ -1,0 +1,14 @@
+<div class="content">
+    <div class="message-list">
+        <% messages.forEach(function(message) { %>
+            <div class="message">
+                <div class="message-header"><%= message.title %></div>
+                <div class="message-body"><%= message.body %></div>
+                <div class="message-footer">
+                    <div class="message-user"><%= message.user %></div>
+                    <div class="message-timestamp"><%= message.timestamp %></div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>

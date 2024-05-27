@@ -5,18 +5,37 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/stylesheets/style.css">
+        <script>
+            // Function to toggle the secret input in the user form
+            function toggleSecretInput() {
+                const secretInput = document.getElementById('secret');
+                const statuses = document.querySelectorAll('input[name="status"]');
+                let status = '';
+                for (let i = 0; i < statuses.length; i++) {
+                    if (statuses[i].checked) {
+                        status = statuses[i].value;
+                        break;
+                    }
+                }
+                if (status === 'newby') {
+                    secretInput.style.display = 'none';
+                } else {
+                    secretInput.style.display = 'flex';
+                }
+            }
+        </script>
     </head>
     <body>
         <div class="container">
             <div class="header">
                 <div class="logo">
-                    <img class="logo" src="images/membersonly-logo.png" alt="logo-membersonly"/>
+                    <img class="logo" src="../images/membersonly-logo.png" alt="logo-membersonly"/>
                 </div>
                 <div class="menu">
                     <ul>
                         <li><a class="menu-item" href="/">Home</a></li>
                         <li><a class="menu-item" href="/members">Members</a></li>
-                        <li><a class="menu-item" href="/register">Register</a></li>
+                        <li><a class="menu-item" href="/user/create">Register</a></li>
                         <li><a class="menu-item" href="/login">Login</a></li>
                         <li><a class="menu-item" href="/logout">Logout</a></li> <!-- Only is there is someone logged in-->
                     </ul>

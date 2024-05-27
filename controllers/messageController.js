@@ -9,6 +9,14 @@ const { body, validationResult } = require('express-validator');
 
 // Display list of all messages on index page (home page).
 exports.index = asyncHandler(async function (req, res, next) {
-    const messages = await Message.find().populate('user').exec();
-    res.render('index', { title: 'Message Board Home', messages: messages });
+    const messages = await Message.find()
+        .sort({timestamp: 1})
+        .populate('user')
+        .exec();
+
+    res.render('message_list', {
+        title: 'Message Board Home',
+        messages: messages,
+        layout: 'layout',
+    });
 });

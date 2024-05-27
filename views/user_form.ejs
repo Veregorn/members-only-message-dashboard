@@ -1,0 +1,45 @@
+<div class="content">
+    <div class="user-form">
+        <form action="/user/create" method="post">
+            <div class="form-group">
+                <label for="first_name">First Name:</label>
+                <input type="text" id="first_name" name="first_name" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="last_name">Last Name:</label>
+                <input type="text" id="last_name" name="last_name" required maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="username">Email:</label>
+                <input type="email" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="password2">Repeat password:</label>
+                <input type="password" id="password2" name="password2" required>
+            </div>
+            <div class="form-group">
+                <p>If you have a Member or Admin Secret, select the option below and introduce the secret.</p>
+                <label>Status:</label>
+                <div class="radio-group">
+                    <input type="radio" id="status" name="status" value="newby" onclick="toggleSecretInput()" checked>
+                    <label class="radio-label" for="newby">New</label>
+                    <input type="radio" id="status" name="status" value="member" onclick="toggleSecretInput()">
+                    <label class="radio-label" for="member">Member</label>
+                    <input type="radio" id="status" name="status" value="admin" onclick="toggleSecretInput()">
+                    <label class="radio-label" for="admin">Admin</label>
+                </div>
+            </div>
+            <div class="form-group" id="secret" style="display: none;">
+                <label for="secret">Secret:</label>
+                <input type="text" id="secret" name="secret">
+            </div>
+            <div class="form-group">
+                <button type="submit">Register</button>
+            </div>
+        </form>
+    </div>
+</div>
