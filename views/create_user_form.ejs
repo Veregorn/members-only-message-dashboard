@@ -1,0 +1,103 @@
+<div class="content">
+    <h1><%= title %></h1>
+    <div class="user-form">
+        <% if (succeeded) { %>
+            <p>User created, now you can login from the main menu.</p>
+        <% } else { %>
+            <form method="post">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input 
+                        type="text" 
+                        id="first_name" 
+                        name="first_name" 
+                        value="<%= user ? user.first_name : '' %>"
+                        required 
+                        maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input 
+                        type="text" 
+                        id="last_name" 
+                        name="last_name" 
+                        value="<%= user ? user.last_name : '' %>"
+                        required 
+                        maxlength="100">
+                </div>
+                <div class="form-group">
+                    <label for="username">Email:</label>
+                    <input 
+                        type="email" 
+                        id="username" 
+                        name="username" 
+                        value="<%= user ? user.username : '' %>"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        value="<%= user ? user.password : '' %>"
+                        required>
+                </div>
+                <div class="form-group">
+                    <label for="password2">Repeat password:</label>
+                    <input 
+                    type="password" 
+                    id="password2" 
+                    name="password2" 
+                    required>
+                </div>
+                <div class="form-group">
+                    <p>If you have a Member or Admin Secret, select the option below and introduce the secret.</p>
+                    <label>Status:</label>
+                    <div class="radio-group">
+                        <input 
+                            type="radio" 
+                            id="status" 
+                            name="status" 
+                            value="newby" 
+                            onclick="toggleSecretInput()" 
+                            <%= !user || (user && user.status === 'newby') ? 'checked' : '' %>>
+                        <label class="radio-label" for="newby">New</label>
+                        <input 
+                            type="radio" 
+                            id="status" 
+                            name="status" 
+                            value="member" 
+                            onclick="toggleSecretInput()" 
+                            <%= user && user.status === 'member' ? 'checked' : '' %>>
+                        <label class="radio-label" for="member">Member</label>
+                        <input 
+                        type="radio" 
+                        id="status" 
+                        name="status" 
+                        value="admin" 
+                        onclick="toggleSecretInput()" 
+                        <%= user && user.status === 'admin' ? 'checked' : '' %>>
+                        <label class="radio-label" for="admin">Admin</label>
+                    </div>
+                </div>
+                <div class="form-group" id="secret" <%= (user && (user.status === 'member' || user.status === 'admin')) ? 'style=display:flex;' : 'style=display:none;' %>>
+                    <label for="secret">Secret:</label>
+                    <input type="text" id="secret" name="secret">
+                </div>
+                <div class="form-group">
+                    <button type="submit">Register</button>
+                </div>
+            </form>
+            <% if (errors) { %>
+                <div class="errors">
+                    <ul>
+                        <% errors.forEach(function(error) { %>
+                            <li><%= error.msg %></li>
+                        <% }); %>
+                    </ul>
+                </div>
+            <% } %>
+        <% } %>
+    </div>
+</div>

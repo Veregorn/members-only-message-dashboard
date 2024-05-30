@@ -31,13 +31,21 @@
                 <div class="logo">
                     <img class="logo" src="../images/membersonly-logo.png" alt="logo-membersonly"/>
                 </div>
+                <% if (currentUser) { %>
+                    <div class="user">
+                        <p>Welcome, <%= currentUser.username %></p>
+                    </div>
+                <% } %>
                 <div class="menu">
                     <ul>
                         <li><a class="menu-item" href="/">Home</a></li>
                         <li><a class="menu-item" href="/members">Members</a></li>
-                        <li><a class="menu-item" href="/user/create">Register</a></li>
-                        <li><a class="menu-item" href="/login">Login</a></li>
-                        <li><a class="menu-item" href="/logout">Logout</a></li> <!-- Only is there is someone logged in-->
+                        <% if (!currentUser) { %>
+                            <li><a class="menu-item" href="/user/create">Register</a></li>
+                            <li><a class="menu-item" href="/user/login">Login</a></li>
+                        <% } else { %>
+                            <li><a class="menu-item" href="/user/logout">Logout</a></li> <!-- Only is there is someone logged in-->
+                        <% } %>
                     </ul>
                 </div>
             </div>

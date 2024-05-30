@@ -14,4 +14,10 @@ router.get('/user/create', userController.user_create_get);
 /* POST user create page. */
 router.post('/user/create', userController.user_create_post);
 
+/* GET user login page. */
+router.get('/user/login', userController.user_login_get);
+
+/* POST user login page. */
+router.post('/user/login', userController.user_login_post);
+
 module.exports = router;

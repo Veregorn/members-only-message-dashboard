@@ -110,6 +110,14 @@ a {
   color: #244e40;
 }
 
+.content h1 {
+  margin-top: 2rem;
+  font-size: 2rem;
+  color: #244e40;
+  text-align: center;
+  text-transform: uppercase;
+}
+
 /* Forms */
 
 .user-form {
