@@ -10,9 +10,6 @@ const { body, validationResult } = require('express-validator');
 // Import bcrypt for password hashing
 const bcrypt = require('bcryptjs');
 
-// Import passport for authentication
-const passport = require('passport');
-
 // Load environment variables
 require('dotenv').config();
 
@@ -22,7 +19,6 @@ exports.user_create_get = asyncHandler(async function (req, res, next) {
         title: 'Create User',
         user: null,
         errors: null,
-        succeeded: false,
         layout: 'layout',
     });
 });
@@ -88,12 +84,12 @@ exports.user_create_post = [
         });
 
         if (!errors.isEmpty()) {
+            req.flash('error_msg', 'There are errors. Please correct the form.');
             // There are errors. Render the form again with sanitized values/error messages.
             res.render('create_user_form', {
                 title: 'Create User',
                 user: user,
                 errors: errors.array(),
-                succeeded: false,
                 layout: 'layout',
             });
             return;
@@ -105,11 +101,11 @@ exports.user_create_post = [
 
             // Data from form is valid. Save user.
             await user.save();
+            req.flash('success_msg', 'User created successfully');
             res.render('create_user_form', {
                 title: 'Create User',
                 user: user,
                 errors: null,
-                succeeded: true,
                 layout: 'layout',
             });
         }
@@ -125,43 +121,3 @@ exports.user_login_get = asyncHandler(async function (req, res, next) {
         layout: 'layout',
     });
 });
-
-// Handle user login on POST.
-exports.user_login_post = [
-    // Validate and sanitize fields
-    body('username')
-        .trim()
-        .isLength({ min: 1, max: 100 })
-        .withMessage('Username must not be empty and must not be greater than 100 characters.')
-        .escape(),
-
-    body('password')
-        .trim()
-        .isLength({ min: 1, max: 30 })
-        .withMessage('Password must not be empty and must not be greater than 30 characters.')
-        .escape(),
-
-    // Process request after validation and sanitization
-    asyncHandler(async function (req, res, next) {
-        // Extract the validation errors from a request
-        const errors = validationResult(req);
-
-        if (!errors.isEmpty()) {
-            // There are errors. Render the form again with sanitized values/error messages.
-            res.render('login_user_form', {
-                title: 'Login',
-                user: null,
-                errors: errors.array(),
-                layout: 'layout',
-            });
-            return;
-        } else {
-            // Authenticate user
-            passport.authenticate('local', {
-                successRedirect: '/',
-                failureRedirect: '/user/login',
-                failureFlash: true,
-            })
-        };
-    }),
-];

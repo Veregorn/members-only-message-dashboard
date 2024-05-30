@@ -6,6 +6,7 @@ const logger = require('morgan');
 const mongoose = require("mongoose");
 const expressLayouts = require('express-ejs-layouts');
 const passport = require('./passportConfig');
+const flash = require('connect-flash'); // Import flash for flash messages
 
 const indexRouter = require('./routes/index');
 
@@ -46,6 +47,17 @@ app.use(session({
 
 // Set up passport for authentication
 app.use(passport.session());
+
+// Set up flash for flash messages
+app.use(flash());
+
+// Middleware to set up flash messages for all views
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  next();
+});
 
 // Set up body parser for form data (req.body) (complex data not supported)
 app.use(express.urlencoded({ extended: false }));
