@@ -95,5 +95,8 @@
                 </ul>
             </div>
         <% } %>
+        <% if (error_msg) { %>
+            <p class="error-msg"><%= error_msg %></p>
+        <% } %>
     </div>
 </div>

@@ -32,8 +32,8 @@
                     <img class="logo" src="../images/membersonly-logo.png" alt="logo-membersonly"/>
                 </div>
                 <% if (currentUser) { %>
-                    <div class="user">
-                        <p>Welcome, <%= currentUser.username %></p>
+                    <div class="greeting">
+                        <p>Welcome, <%= currentUser.first_name %></p>
                     </div>
                 <% } %>
                 <div class="menu">

@@ -86,7 +86,6 @@ a {
   flex-direction: row;
   justify-content: end;
   align-items: center;
-  width: 100%;
 }
 
 .menu ul {
@@ -107,6 +106,15 @@ a {
 }
 
 .menu-item:hover {
+  color: #244e40;
+}
+
+.greeting {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  align-items: center;
+  font-size: 0.8rem;
   color: #244e40;
 }
 
@@ -203,4 +211,14 @@ input[type="radio"] {
 
 .errors li {
   list-style-type: none;
+}
+
+.error-msg {
+  color: red;
+  font-size: 0.8rem;
+}
+
+.success-msg {
+  color: green;
+  font-size: 0.8rem;
 }

@@ -13,6 +13,9 @@ const bcrypt = require('bcryptjs');
 // Load environment variables
 require('dotenv').config();
 
+// Import passport for authentication
+const passport = require('passport');
+
 // Display user create form on GET.
 exports.user_create_get = asyncHandler(async function (req, res, next) {
     res.render('create_user_form', {
@@ -101,13 +104,8 @@ exports.user_create_post = [
 
             // Data from form is valid. Save user.
             await user.save();
-            req.flash('success_msg', 'User created successfully');
-            res.render('create_user_form', {
-                title: 'Create User',
-                user: user,
-                errors: null,
-                layout: 'layout',
-            });
+            req.flash('success_msg', 'User created successfully. Please login.');
+            res.redirect('/user/login');
         }
     }),
 ];
@@ -120,4 +118,23 @@ exports.user_login_get = asyncHandler(async function (req, res, next) {
         errors: null,
         layout: 'layout',
     });
+});
+
+// Handle user login on POST.
+exports.user_login_post = asyncHandler(async function (req, res, next) {
+    passport.authenticate('local', (err, user, info) => {
+      if (err) {
+        return next(err);
+      }
+      if (!user) {
+        req.flash('error_msg', info.message);
+        return res.redirect('/user/login');
+      }
+      req.logIn(user, (err) => {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect('/');
+      });
+    })(req, res, next);
 });
