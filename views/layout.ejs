@@ -23,6 +23,16 @@
                     secretInput.style.display = 'flex';
                 }
             }
+
+            // Function to toggle the change status form
+            function toggleChangeStatusForm() {
+                const changeStatusForm = document.getElementById('change-status-form');
+                if (changeStatusForm.style.display === 'none') {
+                    changeStatusForm.style.display = 'flex';
+                } else {
+                    changeStatusForm.style.display = 'none';
+                }
+            }
         </script>
     </head>
     <body>
@@ -33,7 +43,7 @@
                 </div>
                 <% if (currentUser) { %>
                     <div class="greeting">
-                        <p>Welcome, <%= currentUser.first_name %></p>
+                        <p>Welcome, <a href="/user/profile"><%= currentUser.first_name %></a></p>
                     </div>
                 <% } %>
                 <div class="menu">
@@ -44,6 +54,7 @@
                             <li><a class="menu-item" href="/user/create">Register</a></li>
                             <li><a class="menu-item" href="/user/login">Login</a></li>
                         <% } else { %>
+                            <li><a class="menu-item" href="/message/create">Create Message</a></li> <!-- Only if there is someone logged in -->
                             <li><a class="menu-item" href="/user/logout">Logout</a></li> <!-- Only is there is someone logged in-->
                         <% } %>
                     </ul>

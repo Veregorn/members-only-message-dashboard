@@ -1,0 +1,37 @@
+<div class="content">
+    <h1><%= title %></h1>
+    <div class="form-container">
+        <form method="post">
+            <div class="form-group">
+                <label for="title">Title:</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="title"
+                    value="<%= message ? message.title : '' %>"
+                    required
+                    maxlength="100">
+            </div>
+            <div class="form-group">
+                <label for="body">Body:</label>
+                <textarea
+                    id="body"
+                    name="body" 
+                    rows="5"
+                    cols="50"><%= message ? message.body : '' %></textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit">Send Message</button>
+            </div>
+        </form>
+        <% if (errors) { %>
+            <div class="errors">
+                <ul>
+                    <% errors.forEach(function(error) { %>
+                        <li><%= error.msg %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% } %>
+    </div>
+</div>

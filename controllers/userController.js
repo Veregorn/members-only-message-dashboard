@@ -138,3 +138,54 @@ exports.user_login_post = asyncHandler(async function (req, res, next) {
       });
     })(req, res, next);
 });
+
+// Handle user logout on GET.
+exports.user_logout_get = asyncHandler(async function (req, res, next) {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
+});
+
+// Display user profile on GET.
+exports.user_profile_get = asyncHandler(async function (req, res, next) {
+    res.render('profile', {
+        title: 'User Profile',
+        user: req.user,
+        layout: 'layout',
+    });
+});
+
+// Handle user profile on POST (status change).
+exports.user_profile_post = asyncHandler(async function (req, res, next) {
+    // Find user by ID
+    const user = await User.findById(req.user._id).exec();
+
+    // Check if user exists
+    if (user === null) {
+        const err = new Error('User not found');
+        err.status = 404;
+        return next(err);
+    }
+
+    // Check if user have the secret to change status (member or admin)
+    if (req.body.status === 'admin' && req.body.secret !== process.env.ADMIN_SECRET) {
+        req.flash('error_msg', "You don't know the secret. You are not authorized to change to admin status");
+        return res.redirect('/user/profile');
+    }
+    if (req.body.status === 'member' && req.body.secret !== process.env.MEMBER_SECRET) {
+        req.flash('error_msg', "You don't know the secret. You are not authorized to change to member status");
+        return res.redirect('/user/profile');
+    }
+
+    // Change status
+    user.status = req.body.status;
+
+    // Update user in database
+    await User.findByIdAndUpdate(req.user._id, user, {});
+
+    // Redirect to profile page
+    res.redirect('/user/profile');
+});
