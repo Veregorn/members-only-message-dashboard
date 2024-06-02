@@ -77,7 +77,12 @@ exports.message_create_post = [
 ];
 
 // Handle message delete on POST.
-exports.message_delete_post = asyncHandler(async function (req, res, next) {
-    await Message.findByIdAndDelete(req.params.id).exec();
-    res.redirect('/');
+exports.message_delete_post = asyncHandler(async function (req, res) {
+    try {
+        await Message.findByIdAndDelete(req.params.id);
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.json({ success: false, message: "Error deleting message."});
+    }
 });
