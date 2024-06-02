@@ -78,6 +78,6 @@ exports.message_create_post = [
 
 // Handle message delete on POST.
 exports.message_delete_post = asyncHandler(async function (req, res, next) {
-    await Message.findByIdAndRemove(req.params.id);
+    await Message.findByIdAndDelete(req.params.id).exec();
     res.redirect('/');
 });
